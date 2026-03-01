@@ -157,12 +157,21 @@ require("lazy").setup({
         end,
     },
 
-    -- Dayfox colorscheme
+    -- Solarized light
     {
-        "EdenEast/nightfox.nvim",
+        "maxmx03/solarized.nvim",
+        lazy = false,
+        priority = 1000,
         config = function()
-            require("nightfox").setup({ options = { transparent = false, terminal_colors = true } })
-            vim.cmd("colorscheme dayfox")
+            vim.o.termguicolors = true
+            vim.o.background = "light"
+            vim.cmd.colorscheme("solarized")
+
+            -- Darker Visual Mode Highlight
+            vim.api.nvim_set_hl(0, 'Visual', { bg = '#d6d1c0', fg = 'NONE' })
+
+            -- We define 'YankColor' here. This ONLY exists when this theme is loaded.
+            vim.api.nvim_set_hl(0, 'YankColor', { bg = '#93a1a1', fg = '#fdf6e3' })
         end,
     },
 
@@ -180,6 +189,7 @@ require("lazy").setup({
                 indent = { enable = true },
                 incremental_selection = { enable = true },
                 playground = { enable = true },
+                auto_install = true,
             })
         end,
     },
