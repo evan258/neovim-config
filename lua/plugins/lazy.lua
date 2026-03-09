@@ -83,6 +83,9 @@ require("lazy").setup({
             vim.keymap.set("n", "<leader>ps", fzf.live_grep, { noremap = true, silent = true })
             fzf.setup({
                 winopts = { height = 0.6, width = 0.8, row = 0.3, col = 0.1, border = "rounded" },
+                fzf_opts = {
+                    ['--color'] = 'bg+:#93a1a1,fg+:#ffffff,hl:#cb4b16,hl+:#cb4b16'
+                },
             })
         end,
     },
@@ -134,10 +137,13 @@ require("lazy").setup({
             "hrsh7th/cmp-nvim-lsp",
             "L3MON4D3/LuaSnip",
             "saadparwaiz1/cmp_luasnip",
+            "rafamadriz/friendly-snippets",
         },
         config = function()
             local cmp = require("cmp")
             local luasnip = require("luasnip")
+
+            require("luasnip.loaders.from_vscode").lazy_load() 
 
             cmp.setup({
                 snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
@@ -149,9 +155,9 @@ require("lazy").setup({
                 }),
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
+                    { name = "luasnip" },
                     { name = "buffer" },
                     { name = "path" },
-                    { name = "luasnip" },
                 }),
             })
         end,
@@ -172,6 +178,9 @@ require("lazy").setup({
 
             -- We define 'YankColor' here. This ONLY exists when this theme is loaded.
             vim.api.nvim_set_hl(0, 'YankColor', { bg = '#93a1a1', fg = '#fdf6e3' })
+
+            -- Highlight matching brackets
+            vim.api.nvim_set_hl(0, 'MatchParen', { bg = '#d6d1c0', fg = '#073642', bold = true })
         end,
     },
 
@@ -203,6 +212,11 @@ require("lazy").setup({
             require("nvim-surround").setup({})
         end,
     },
+
+    -- Find next and prevous (cinb, canb, cilb, calb)
+    {
+        "wellle/targets.vim",
+    }
 
 })
 
